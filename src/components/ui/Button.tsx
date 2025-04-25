@@ -3,22 +3,17 @@
 import { cn } from "@/lib/utils";
 import { ButtonHTMLAttributes, forwardRef, AnchorHTMLAttributes } from "react";
 
-interface ButtonBaseProps {
+type ButtonBaseProps = {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "link";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   disabled?: boolean;
-}
+};
 
-interface ButtonAsButtonProps extends ButtonBaseProps, ButtonHTMLAttributes<HTMLButtonElement> {
-  as?: "button";
-}
-
-interface ButtonAsAnchorProps extends ButtonBaseProps, AnchorHTMLAttributes<HTMLAnchorElement> {
-  as: "a";
-}
-
-type ButtonProps = ButtonAsButtonProps | ButtonAsAnchorProps;
+type ButtonProps = ButtonBaseProps & (
+  | (ButtonHTMLAttributes<HTMLButtonElement> & { as?: "button" })
+  | (AnchorHTMLAttributes<HTMLAnchorElement> & { as: "a" })
+);
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   (
