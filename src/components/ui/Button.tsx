@@ -3,13 +3,13 @@
 import { cn } from "@/lib/utils";
 import { ButtonHTMLAttributes, forwardRef, ElementType, AnchorHTMLAttributes } from "react";
 
-type ButtonBaseProps = {
+interface ButtonBaseProps {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "link";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   disabled?: boolean;
   as?: ElementType;
-};
+}
 
 type ButtonProps = ButtonBaseProps & (
   | (ButtonHTMLAttributes<HTMLButtonElement> & { as?: "button" })
