@@ -1,26 +1,213 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Black/dark grey theme */
+    --background: 0 0% 7%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 80%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 100%;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 0 0% 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: 
+      radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+      radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+      radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    animation: twinkle 8s ease-in-out infinite;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-foreground;
+  }
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl;
+  }
+  h2 {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+  }
+  h3 {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+  p {
+    @apply leading-relaxed text-foreground;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Text selection styles */
+::selection {
+  @apply bg-primary/30 text-foreground;
+}
+
+/* For Firefox */
+::-moz-selection {
+  @apply bg-primary/30 text-foreground;
+}
+
+/* Custom components */
+.section-padding {
+  @apply py-16 sm:py-24 md:py-32;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80;
+}
+
+.section-title {
+  @apply relative inline-block mb-8;
+}
+
+.section-title::after {
+  content: '';
+  @apply absolute -bottom-2 left-0 w-1/3 h-1 bg-white rounded-full;
+}
+
+.card-hover {
+  @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-white/10;
+}
+
+.button-primary {
+  @apply bg-white text-black px-4 py-2 rounded-lg font-medium
+         transition-all duration-300 ease-out
+         inline-flex items-center justify-center gap-2
+         hover:bg-white/90 hover:scale-[1.02]
+         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white
+         disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.button-secondary {
+  @apply bg-secondary text-secondary-foreground px-4 py-2 rounded-lg font-medium
+         transition-all duration-300 ease-out
+         inline-flex items-center justify-center gap-2
+         hover:bg-secondary/90 hover:scale-[1.02]
+         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white
+         disabled:opacity-50 disabled:pointer-events-none;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Layout utilities */
+.container {
+  @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
+}
+
+/* Card styles */
+.card {
+  @apply bg-card text-card-foreground rounded-lg border border-border/50
+         shadow-lg shadow-background/5 backdrop-blur-sm
+         transition-all duration-300 ease-out;
+}
+
+/* Input styles */
+.input {
+  @apply bg-background text-foreground rounded-lg border border-border
+         px-4 py-2 w-full
+         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+         disabled:opacity-50 disabled:pointer-events-none;
+}
+
+/* Link styles */
+a {
+  @apply text-foreground hover:text-primary transition-colors duration-200;
+}
+
+/* Responsive grid */
+.responsive-grid {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-background/80 backdrop-blur-lg border border-border/50;
+}
+
+/* Interactive states */
+.interactive {
+  @apply transition-all duration-300 ease-out
+         hover:scale-[1.02] hover:shadow-lg hover:shadow-white/10
+         active:scale-[0.98]
+         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted rounded-full hover:bg-muted/80;
 }
