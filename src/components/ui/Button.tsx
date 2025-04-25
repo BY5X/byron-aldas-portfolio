@@ -7,6 +7,7 @@ type ButtonBaseProps = {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "link";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
+  disabled?: boolean;
   as?: ElementType;
 };
 
