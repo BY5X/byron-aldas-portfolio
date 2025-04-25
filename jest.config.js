@@ -15,6 +15,9 @@ const config = {
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleDirectories: ['node_modules', '<rootDir>'],
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
 };
 
 module.exports = config; 
