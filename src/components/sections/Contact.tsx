@@ -14,9 +14,18 @@ export function Contact() {
 
     try {
       const formData = new FormData(e.currentTarget);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+      };
+
       const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -98,7 +107,7 @@ export function Contact() {
               </Text>
               <div className="flex justify-center gap-3">
                 <a 
-                  href="mailto:isra5900aldas.com"
+                  href="mailto:isra5900@aldas.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 font-medium transition-all h-8 px-3 text-sm rounded-md border border-border bg-transparent hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98]"
