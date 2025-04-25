@@ -10,10 +10,15 @@ type ButtonBaseProps = {
   disabled?: boolean;
 };
 
-type ButtonProps = ButtonBaseProps & (
-  | (ButtonHTMLAttributes<HTMLButtonElement> & { as?: "button" })
-  | (AnchorHTMLAttributes<HTMLAnchorElement> & { as: "a" })
-);
+type ButtonAsButton = ButtonBaseProps & ButtonHTMLAttributes<HTMLButtonElement> & {
+  as?: "button";
+};
+
+type ButtonAsAnchor = ButtonBaseProps & AnchorHTMLAttributes<HTMLAnchorElement> & {
+  as: "a";
+};
+
+type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   (
