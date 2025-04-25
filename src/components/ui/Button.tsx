@@ -11,17 +11,10 @@ type ButtonBaseProps = {
   as?: ElementType;
 };
 
-type ButtonAsButton = ButtonBaseProps & 
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonBaseProps> & {
-    as?: "button";
-  };
-
-type ButtonAsAnchor = ButtonBaseProps & 
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof ButtonBaseProps> & {
-    as: "a";
-  };
-
-type ButtonProps = ButtonAsButton | ButtonAsAnchor;
+type ButtonProps = ButtonBaseProps & (
+  | (ButtonHTMLAttributes<HTMLButtonElement> & { as?: "button" })
+  | (AnchorHTMLAttributes<HTMLAnchorElement> & { as: "a" })
+);
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
