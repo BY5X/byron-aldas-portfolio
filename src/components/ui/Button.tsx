@@ -12,12 +12,12 @@ type ButtonBaseProps = {
 };
 
 type ButtonAsButton = ButtonBaseProps & 
-  ButtonHTMLAttributes<HTMLButtonElement> & {
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonBaseProps> & {
     as?: "button";
   };
 
 type ButtonAsAnchor = ButtonBaseProps & 
-  AnchorHTMLAttributes<HTMLAnchorElement> & {
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof ButtonBaseProps> & {
     as: "a";
   };
 
