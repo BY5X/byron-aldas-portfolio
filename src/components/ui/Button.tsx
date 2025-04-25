@@ -1,13 +1,26 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ButtonHTMLAttributes, forwardRef } from "react";
+import { ButtonHTMLAttributes, forwardRef, ElementType, AnchorHTMLAttributes } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonBaseProps = {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "link";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
-}
+  as?: ElementType;
+};
+
+type ButtonAsButton = ButtonBaseProps & 
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonBaseProps> & {
+    as?: "button";
+  };
+
+type ButtonAsAnchor = ButtonBaseProps & 
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof ButtonBaseProps> & {
+    as: "a";
+  };
+
+type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -18,12 +31,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       children,
       disabled,
+      as: Component = "button",
       ...props
     },
     ref
   ) => {
     return (
-      <button
+      <Component
         ref={ref}
         className={cn(
           // Base styles
@@ -80,7 +94,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           children
         )}
-      </button>
+      </Component>
     );
   }
 ); 

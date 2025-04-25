@@ -9,9 +9,9 @@ export function Hero() {
       <div className="container">
         <div className="flex flex-col items-center text-center space-y-8">
           <WidgetContainer className="relative max-w-3xl mx-auto">
-            <div className="absolute -top-2 -right-2 sm:top-0 sm:right-0 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-card border border-border/50 shadow-lg flex items-center justify-center">
+            <div className="absolute -top-2 -right-2 sm:top-4 sm:right-4 w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-card border border-border/50 shadow-lg flex items-center justify-center">
               <svg
-                className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground"
+                className="w-10 h-10 sm:w-14 sm:h-14 text-muted-foreground"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -25,12 +25,15 @@ export function Hero() {
                 />
               </svg>
             </div>
-            <div className="pr-20 sm:pr-28">
+            <div className="pr-16 sm:pr-24">
+              <Text variant="small" color="muted" className="mb-2">
+                Hello, my name is
+              </Text>
               <Text variant="h1" className="mb-4">
-                Hi, I&apos;m Byron Aldas
+                Byron Aldas
               </Text>
               <Text variant="body" className="mb-6">
-                I&apos;m a software engineer passionate about building beautiful and functional web applications. I&apos;m currently seeking new opportunities.
+                I&apos;m a back-end developer passionate about building beautiful and functional web applications. I&apos;m currently seeking new opportunities.
               </Text>
             </div>
           </WidgetContainer>

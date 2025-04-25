@@ -70,7 +70,7 @@ export function Timeline() {
         <div className="space-y-12">
           <div className="text-center space-y-4 mb-16">
             <Text variant="h2" className="section-title">My Journey</Text>
-            <Text variant="body" color="muted" className="max-w-[600px] mx-auto">
+            <Text variant="body" color="muted" className="max-w-[600px] mx-auto text-center">
               A timeline of my academic achievements and milestones.
             </Text>
           </div>
