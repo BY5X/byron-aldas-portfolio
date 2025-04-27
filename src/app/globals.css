@@ -122,7 +122,7 @@
   @apply bg-white text-black px-4 py-2 rounded-lg font-medium
          transition-all duration-300 ease-out
          inline-flex items-center justify-center gap-2
-         hover:bg-white/90 hover:scale-[1.02]
+         hover:bg-white/90 hover:scale-[1.02] hover:text-black
          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white
          disabled:opacity-50 disabled:pointer-events-none;
 }
