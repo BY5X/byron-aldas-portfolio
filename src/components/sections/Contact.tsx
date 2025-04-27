@@ -5,15 +5,53 @@ import { Text } from "@/components/ui/Text";
 import { WidgetContainer } from "@/components/ui/WidgetContainer";
 import { Button } from "@/components/ui/Button";
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const validateForm = (formData: FormData): FormErrors => {
+    const errors: FormErrors = {};
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+
+    if (!name?.trim()) {
+      errors.name = "Name is required";
+    }
+
+    if (!email?.trim()) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Please enter a valid email address";
+    }
+
+    if (!message?.trim()) {
+      errors.message = "Message is required";
+    }
+
+    return errors;
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const validationErrors = validateForm(formData);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
     setIsSubmitting(true);
 
     try {
-      const formData = new FormData(e.currentTarget);
       const data = {
         name: formData.get('name'),
         email: formData.get('email'),
@@ -34,6 +72,7 @@ export function Contact() {
 
       alert("Message sent successfully!");
       e.currentTarget.reset();
+      setErrors({});
     } catch (err) {
       alert("Failed to send message. Please try again later.");
     } finally {
@@ -62,10 +101,14 @@ export function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  required
-                  className="input w-full h-9 px-3"
+                  className={`input w-full h-9 px-3 ${errors.name ? 'border-destructive focus-visible:ring-destructive/50' : ''}`}
                   placeholder="Your name"
                 />
+                {errors.name && (
+                  <span className="text-sm text-destructive mt-1 pl-1 animate-fade-in-up">
+                    {errors.name}
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-col items-start w-full">
@@ -76,10 +119,14 @@ export function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  required
-                  className="input w-full h-9 px-3"
+                  className={`input w-full h-9 px-3 ${errors.email ? 'border-destructive focus-visible:ring-destructive/50' : ''}`}
                   placeholder="your@email.com"
                 />
+                {errors.email && (
+                  <span className="text-sm text-destructive mt-1 pl-1 animate-fade-in-up">
+                    {errors.email}
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-col items-start w-full">
@@ -89,11 +136,15 @@ export function Contact() {
                 <textarea
                   id="message"
                   name="message"
-                  required
                   rows={3}
-                  className="input w-full resize-none px-3"
+                  className={`input w-full resize-none px-3 ${errors.message ? 'border-destructive focus-visible:ring-destructive/50' : ''}`}
                   placeholder="Your message..."
                 />
+                {errors.message && (
+                  <span className="text-sm text-destructive mt-1 pl-1 animate-fade-in-up">
+                    {errors.message}
+                  </span>
+                )}
               </div>
 
               <Button type="submit" loading={isSubmitting} className="w-full h-9">
